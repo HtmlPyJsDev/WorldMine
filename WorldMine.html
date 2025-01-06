@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorldMine - Донат, Чат, Регистрация и Форум</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to bottom, #e6ffea, #e6f7ff);
+            color: #1a202c;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            animation: fadeIn 1s ease-out;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #2f855a;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #2f855a;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .benefits, .privileges, .donate-form, .chat-section, .registration-section, .user-management, .monitoring, .forum {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: slideUp 1s ease-out;
+        }
+
+        .benefits-list, .privileges-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 2rem;
+        }
+
+        .benefit-item, .privilege-item {
+            flex-basis: calc(33.333% - 2rem);
+            text-align: center;
+            padding: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 0.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .benefit-item:hover, .privilege-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #2f855a;
+        }
+
+        .privilege-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #2f855a;
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #38a169;
+            margin: 1rem 0;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e0;
+            border-radius: 0.25rem;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: #38a169;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2f855a;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .benefit-item, .privilege-item {
+                flex-basis: 100%;
+            }
+        }
+
+        .chat-messages, .forum-posts {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #cbd5e0;
+            border-radius: 0.25rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .chat-message, .forum-post {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .chat-form, .forum-form {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .chat-form input, .forum-form input {
+            flex-grow: 1;
+        }
+
+        .chat-form button, .forum-form button {
+            flex-shrink: 0;
+        }
+
+        .user-list, .server-status {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .user-list li, .server-status li {
+            padding: 0.5rem;
+            border-bottom: 1px solid #cbd5e0;
+        }
+
+        .user-list li:last-child, .server-status li:last-child {
+            border-bottom: none;
+        }
+
+        .purchase-history {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="container">
+        <header>
+            <h1>WorldMine</h1>
+            <p>Донат, Чат, Регистрация, Форум и многое другое!</p>
+        </header>
+
+        <section class="benefits">
+            <h2>Преимущества доната</h2>
+            <div class="benefits-list">
+                <div class="benefit-item">
+                    <div class="benefit-icon">💎</div>
+                    <h3>Уникальные предметы</h3>
+                    <p>Получите доступ к эксклюзивным предметам и блокам</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">👑</div>
+                    <h3>Особый статус</h3>
+                    <p>Выделяйтесь среди других игроков с помощью специального префикса</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">⚡</div>
+                    <h3>Дополнительные возможности</h3>
+                    <p>Используйте расширенные команды и функции на сервере</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="privileges">
+            <h2>Доступные привилегии</h2>
+            <div class="privileges-list">
+                <div class="privilege-item">
+                    <h3>VIP</h3>
+                    <p class="price">$5</p>
+                    <button onclick="selectPrivilege('VIP')">Выбрать</button>
+                </div>
+                <div class="privilege-item">
+                    <h3>Premium</h3>
+                    <p class="price">$10</p>
+                    <button onclick="selectPrivilege('Premium')">Выбрать</button>
+                </div>
+                <div class="privilege-item">
+                    <h3>Elite</h3>
+                    <p class="price">$20</p>
+                    <button onclick="selectPrivilege('Elite')">Выбрать</button>
+                </div>
+                <div class="privilege-item">
+                    <h3>Legend</h3>
+                    <p class="price">$50</p>
+                    <button onclick="selectPrivilege('Legend')">Выбрать</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="donate-form">
+            <h2>Купить донат</h2>
+            <form id="donateForm">
+                <input type="text" id="nickname" placeholder="Ваш никнейм" required>
+                <input type="email" id="email" placeholder="Ваш email" required>
+                <select id="privilege" required>
+                    <option value="">Выберите привилегию</option>
+                    <option value="VIP">VIP</option>
+                    <option value="Premium">Premium</option>
+                    <option value="Elite">Elite</option>
+                    <option value="Legend">Legend</option>
+                </select>
+                <button type="submit">Оплатить</button>
+            </form>
+        </section>
+
+        <section class="registration-section">
+            <h2>Регистрация</h2>
+            <form id="registrationForm">
+                <input type="text" id="regNickname" placeholder="Никнейм" required>
+                <input type="email" id="regEmail" placeholder="Email" required>
+                <input type="password" id="regPassword" placeholder="Пароль" required>
+                <button type="submit">Зарегистрироваться</button>
+            </form>
+        </section>
+
+        <section class="user-management">
+            <h2>Управление правами</h2>
+            <ul class="user-list" id="userList">
+                <!-- Список пользователей будет добавлен динамически -->
+            </ul>
+        </section>
+
+        <section class="monitoring">
+            <h2>Мониторинг сервера</h2>
+            <ul class="server-status" id="serverStatus">
+                <!-- Статус сервера будет добавлен динамически -->
+            </ul>
+        </section>
+
+        <section class="chat-section">
+            <h2>Чат Игроков</h2>
+            <div class="chat-messages" id="chatMessages"></div>
+            <form id="chatForm" class="chat-form">
+                <input type="text" id="chatNickname" placeholder="Ваш никнейм" required>
+                <input type="text" id="chatMessage" placeholder="Ваше сообщение" required>
+                <button type="submit">Отправить</button>
+            </form>
+        </section>
+
+        <section class="forum">
+            <h2>Форум</h2>
+            <div class="forum-posts" id="forumPosts"></div>
+            <form id="forumForm" class="forum-form">
+                <input type="text" id="forumNickname" placeholder="Ваш никнейм" required>
+                <input type="text" id="forumTopic" placeholder="Тема" required>
+                <textarea id="forumMessage" placeholder="Ваше сообщение" required></textarea>
+                <button type="submit">Создать тему</button>
+            </form>
+        </section>
+
+        <section class="purchase-history">
+            <h2>История покупок</h2>
+            <ul id="purchaseList">
+                <!-- История покупок будет добавлена динамически -->
+            </ul>
+        </section>
+
+        <footer>
+            <p>&copy; 2024 WorldMine. Все права защищены.</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#4caf50" },
+                shape: { type: "circle", stroke: { width: 0, color: "#000000" } },
+                opacity: { value: 0.5, random: false, anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false } },
+                size: { value: 3, random: true, anim: { enable: false, speed: 40, size_min: 0.1, sync: false } },
+                line_linked: { enable: true, distance: 150, color: "#4caf50", opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 6, direction: "none", random: false, straight: false, out_mode: "out", bounce: false, attract: { enable: false, rotateX: 600, rotateY: 1200 } }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" }, resize: true },
+                modes: { grab: { distance: 400, line_linked: { opacity: 1 } }, bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 }, repulse: { distance: 200, duration: 0.4 }, push: { particles_nb: 4 }, remove: { particles_nb: 2 } }
+            },
+            retina_detect: true
+        });
+
+        function selectPrivilege(privilege) {
+            document.getElementById('privilege').value = privilege;
+            document.querySelector('.donate-form').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.getElementById('donateForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nickname = document.getElementById('nickname').value;
+            const email = document.getElementById('email').value;
+            const privilege = document.getElementById('privilege').value;
+            alert(`Спасибо за покупку, ${nickname}! Вы выбрали привилегию ${privilege}. Подтверждение отправлено на ${email}. Наслаждайтесь новыми возможностями!`);
+            addPurchase(nickname, privilege);
+        });
+
+        // Функционал чата
+        const chatMessages = document.getElementById('chatMessages');
+        const chatForm = document.getElementById('chatForm');
+        const chatNickname = document.getElementById('chatNickname');
+        const chatMessage = document.getElementById('chatMessage');
+
+        chatForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nickname = chatNickname.value;
+            const message = chatMessage.value;
+            if (nickname && message) {
+                addChatMessage(nickname, message);
+                chatMessage.value = '';
+            }
+        });
+
+        function addChatMessage(nickname, message) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('chat-message');
+            messageElement.textContent = `${nickname}: ${message}`;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Функционал форума
+        const forumPosts = document.getElementById('forumPosts');
+        const forumForm = document.getElementById('forumForm');
+        const forumNickname = document.getElementById('forumNickname');
+        const forumTopic = document.getElementById('forumTopic');
+        const forumMessage = document.getElementById('forumMessage');
+
+        forumForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nickname = forumNickname.value;
+            const topic = forumTopic.value;
+            const message = forumMessage.value;
+            if (nickname && topic && message) {
+                addForumPost(nickname, topic, message);
+                forumTopic.value = '';
+                forumMessage.value = '';
+            }
+        });
+
+        function addForumPost(nickname, topic, message) {
+            const postElement = document.createElement('div');
+            postElement.classList.add('forum-post');
+            postElement.innerHTML = `<strong>${topic}</strong> (от ${nickname})<br>${message}`;
+            forumPosts.appendChild(postElement);
+            forumPosts.scrollTop = forumPosts.scrollHeight;
+        }
+
+        // Функционал регистрации
+        const registrationForm = document.getElementById('registrationForm');
+        registrationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nickname = document.getElementById('regNickname').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            alert(`Регистрация успешна! Добро пожаловать, ${nickname}!`);
+            addUser(nickname, 'Игрок');
+        });
+
+        // Управление пользователями
+        const userList = document.getElementById('userList');
+        function addUser(nickname, role) {
+            const userElement = document.createElement('li');
+            userElement.textContent = `${nickname} - ${role}`;
+            userList.appendChild(userElement);
+        }
+
+        // Мониторинг сервера
+        const serverStatus = document.getElementById('serverStatus');
+        function updateServerStatus(status) {
+            const statusElement = document.createElement('li');
+            statusElement.textContent = status;
+            serverStatus.appendChild(statusElement);
+        }
+
+        // История покупок
+        const purchaseList = document.getElementById('purchaseList');
+        function addPurchase(nickname, privilege) {
+            const purchaseElement = document.createElement('li');
+            purchaseElement.textContent = `${nickname} купил привилегию ${privilege}`;
+            purchaseList.appendChild(purchaseElement);
+        }
+
+        // Инициализация с некоторыми данными
+        addChatMessage('Система', 'Добро пожаловать в чат WorldMine!');
+        addForumPost('Админ', 'Правила сервера', 'Пожалуйста, соблюдайте правила и уважайте других игроков.');
+        addUser('Admin', 'Администратор');
+        addUser('Moderator', 'Модератор');
+        updateServerStatus('Сервер онлайн: 100 игроков');
+        addPurchase('VIPPlayer', 'VIP');
+    </script>
+</body>
+</html>
