@@ -1,2 +1,0 @@
-# WorldMine
-WorldMine
